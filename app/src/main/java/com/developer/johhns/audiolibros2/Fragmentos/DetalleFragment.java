@@ -1,5 +1,6 @@
 package com.developer.johhns.audiolibros2.Fragmentos;
 
+
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import android.widget.MediaController;
 import android.widget.TextView;
 
@@ -26,7 +28,7 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
         MediaPlayer.OnPreparedListener, MediaController.MediaPlayerControl {
 
     public static String ARG_ID_LIBRO = "id_libro";
-    MediaPlayer     mediaPlayer ;
+    MediaPlayer mediaPlayer ;
     MediaController mediaController ;
 
     @Nullable
@@ -52,12 +54,17 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
         if ( mediaPlayer != null ) {
             mediaPlayer.release();
         }
+
+        Log.i("DETALLE","URL = " + libro.urlAudio) ;
+
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setOnPreparedListener(this);
+
         mediaController = new MediaController(getActivity());
         Uri audio = Uri.parse( libro.urlAudio ) ;
         try {
-            mediaPlayer.setDataSource( getActivity() , audio );
+            mediaPlayer.setDataSource( getActivity().getBaseContext() , audio );
+
             mediaPlayer.prepareAsync();
 
         } catch ( IOException e ){
@@ -73,7 +80,7 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
     public void onPrepared(MediaPlayer mp) {
         mp.start();
         mediaController.setMediaPlayer(this);
-        mediaController.setAnchorView( getView().findViewById( R.id.detalle_fragment ) );
+        mediaController.setAnchorView( getView().findViewById( R.id.detalle ) );
         mediaController.setEnabled(true);
         mediaController.show();
     }

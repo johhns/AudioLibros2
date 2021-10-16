@@ -47,8 +47,6 @@ public class SelectorFragmentos extends Fragment {
         adaptadorLibros.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Snackbar.make( v , "Selecionastes el elemento : " + recyclerView.getChildAdapterPosition(v) ,Snackbar.LENGTH_LONG ).show();
-                //detalleFragment = new DetalleFragment();
                 ( (MainActivity) actividad ).mostrarDetalle(recyclerView.getChildAdapterPosition(v)) ;
             }
         });
