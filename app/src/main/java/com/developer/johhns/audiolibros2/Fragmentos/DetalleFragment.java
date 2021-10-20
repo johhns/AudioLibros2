@@ -1,6 +1,9 @@
 package com.developer.johhns.audiolibros2.Fragmentos;
 
 
+import android.app.Activity;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,13 +26,21 @@ import com.developer.johhns.audiolibros2.Libro;
 import com.developer.johhns.audiolibros2.R;
 
 import java.io.IOException;
+import java.net.URI;
 
 public class DetalleFragment extends Fragment implements View.OnTouchListener,
-        MediaPlayer.OnPreparedListener, MediaController.MediaPlayerControl {
+        MediaPlayer.OnPreparedListener, MediaController.MediaPlayerControl , MediaPlayer.OnErrorListener {
 
     public static String ARG_ID_LIBRO = "id_libro";
     MediaPlayer mediaPlayer ;
     MediaController mediaController ;
+    private Activity actividad;
+
+    @Override
+    public void onAttach(@NonNull Activity activity) {
+        super.onAttach(activity);
+        this.actividad   = activity ;
+    }
 
     @Nullable
     @Override
@@ -55,20 +66,38 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
             mediaPlayer.release();
         }
 
-        Log.i("DETALLE","URL = " + libro.urlAudio) ;
+        Log.i("DETALLE","URL = **" + libro.urlAudio + "**") ;
+        AudioAttributes attr = new AudioAttributes.Builder()
+                .setLegacyStreamType(AudioManager.STREAM_MUSIC)
+                .build();
+
 
         mediaPlayer = new MediaPlayer();
+        //Uri
+        String audio = libro.urlAudio  ;
+
+        mediaPlayer.setAudioAttributes( attr );
         mediaPlayer.setOnPreparedListener(this);
-
         mediaController = new MediaController(getActivity());
-        Uri audio = Uri.parse( libro.urlAudio ) ;
         try {
-            mediaPlayer.setDataSource( getActivity().getBaseContext() , audio );
-
+            //mediaPlayer.setDataSource( actividad.getBaseContext() , audio );
+            mediaPlayer.setDataSource(audio);
+            mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                @Override
+                public boolean onError(MediaPlayer mp, int what, int extra) {
+                    Log.e("Audiolibros","ERROR : " + String.valueOf(what) + "-" + String.valueOf(extra) ) ;
+                    return false;
+                }
+            });
             mediaPlayer.prepareAsync();
-
+        } catch ( IllegalArgumentException e ){
+           e.printStackTrace();
+            Log.e("Audiolibros","ERROR : ARGUMENT EXCEPTION : " + audio, e) ;
+        } catch ( IllegalStateException e ){
+           e.printStackTrace();
+            Log.e("Audiolibros","ERROR : ESTADO EXCEPTION : " + audio, e) ;
         } catch ( IOException e ){
-            Log.e("Audiolibros","ERROR : NO SE PUEDE REPRODUCIR EL AUDIO : " + audio, e) ;
+            Log.e("Audiolibros","ERROR : IOEXCEPTION : " + audio, e) ;
         }
     }
 
@@ -88,12 +117,14 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         mediaController.show();
+        Log.i("Audiolibros","MEDIAPLAYER ON TOUCH" ) ;
         return false;
     }
 
     @Override
     public void start() {
         mediaPlayer.start();
+        Log.i("Audiolibros","MEDIAPLAYER INICIADO " ) ;
     }
 
     @Override
@@ -108,9 +139,11 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
         super.onStop();
     }
 
+
     @Override
     public void pause() {
       mediaPlayer.pause();
+        Log.i("Audiolibros","MEDIAPLAYER PAUSADO " ) ;
     }
 
     @Override
@@ -128,12 +161,22 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.release();
+        mediaPlayer = null ;
+        Log.i("Audiolibros","MEDIAPLAYER DESTROY " ) ;
+    }
+
+    @Override
     public void seekTo(int pos) {
        mediaPlayer.seekTo( pos );
+        Log.i("Audiolibros","MEDIAPLAYER SEEK TO " ) ;
     }
 
     @Override
     public boolean isPlaying() {
+        Log.i("Audiolibros","MEDIAPLAYER SONANDO " ) ;
         return mediaPlayer.isPlaying();
     }
 
@@ -144,6 +187,7 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
 
     @Override
     public boolean canPause() {
+        Log.i("Audiolibros","MEDIAPLAYER CAN PAUSE " ) ;
         return true;
     }
 
@@ -160,5 +204,11 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
     @Override
     public int getAudioSessionId() {
         return 0;
+    }
+
+    @Override
+    public boolean onError(MediaPlayer mp, int what, int extra) {
+        Log.e("Audiolibros","ON ERROR : " + what ) ;
+        return false;
     }
 }

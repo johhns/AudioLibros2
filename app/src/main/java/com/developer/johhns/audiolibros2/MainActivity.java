@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,13 +33,19 @@ public class MainActivity extends AppCompatActivity {
         //  Aplicacion aplicacion = (Aplicacion) getApplication() ;
 
         btnPlayMusic = findViewById(R.id.btnPlay ) ;
+        btnPlayMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity( new Intent( v.getContext() , Reproductor.class ));
+            }
+        });
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.encabezado, new SelectorFragmentos())
                 .replace(R.id.detalle, new DetalleFragment())
                 .commit();
 
-        playMusic() ;
+        //playMusic() ;
 
     }
 
@@ -53,13 +60,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    /*
     private void playMusic(){
         final Thread audioThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 final MediaPlayer mediaPlayer = new MediaPlayer();
 
-                Uri myUri = Uri.parse("http://mmoviles.upv.es/audiolibros/kappa.mp3");
+                Uri myUri = Uri.parse("http://www.hubharp.com/web_sound/BachGavotte.mp3");
                 try {
                     mediaPlayer.setDataSource(getBaseContext(), myUri);
                     mediaPlayer.prepare();
@@ -87,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    */
 
 
 }
