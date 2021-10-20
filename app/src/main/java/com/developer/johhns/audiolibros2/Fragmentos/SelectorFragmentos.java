@@ -57,7 +57,7 @@ public class SelectorFragmentos extends Fragment {
 
         adaptadorLibros.setOnItemLongClickListener( new View.OnLongClickListener() {
             public boolean onLongClick( final View v ) {
-                final int id recyclerView.getChildAdapterPosition(v);
+                final int id = recyclerView.getChildAdapterPosition(v);
                 CharSequence[] opciones = { "Compartir" , "Borrar" , "Insertar" } ;
                 AlertDialog.Builder menu = new AlertDialog.Builder( actividad ) ;
                 menu.setItems(opciones, new DialogInterface.OnClickListener() {
@@ -73,8 +73,12 @@ public class SelectorFragmentos extends Fragment {
                                 startActivity( Intent.createChooser( intent , "Compartir" ) );
                                 break;
                             case 1:
+                                ((Aplicacion) actividad.getApplication()).listaLibros.remove(id);
+                                adaptadorLibros.notifyDataSetChanged();
                                 break;
                             case 2:
+                                Libro libro2 =  ((Aplicacion) actividad.getApplication()).listaLibros.get(id);
+                                ((Aplicacion) actividad.getApplication()).listaLibros.add( libro2 ) ;
                                 break;
 
                         }

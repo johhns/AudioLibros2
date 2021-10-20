@@ -32,6 +32,7 @@ public class AdaptadorLibros extends RecyclerView.Adapter<AdaptadorLibros.ViewHo
     public AdaptadorLibros.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View  vista = inflater.inflate(R.layout.elemento_selector,null) ;
         vista.setOnClickListener( onClickListener );
+        vista.setOnLongClickListener(onLongClickListener);
         return new ViewHolder(vista);
     }
 
