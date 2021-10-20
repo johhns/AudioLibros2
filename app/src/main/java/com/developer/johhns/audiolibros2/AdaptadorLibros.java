@@ -19,6 +19,7 @@ public class AdaptadorLibros extends RecyclerView.Adapter<AdaptadorLibros.ViewHo
     protected List<Libro> listaLibros ;
     private Context contexto ;
     private View.OnClickListener onClickListener ;
+    private View.OnLongClickListener onLongClickListener ;
 
     public AdaptadorLibros(Context contexto ,List<Libro> listaLibros ) {
         inflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
@@ -62,6 +63,10 @@ public class AdaptadorLibros extends RecyclerView.Adapter<AdaptadorLibros.ViewHo
 
     public void setOnItemClickListener( View.OnClickListener onClickListener ){
         this.onClickListener = onClickListener ;
+    }
+
+    public void setOnItemLongClickListener( View.OnLongClickListener onLongClickListener ){
+        this.onLongClickListener = onLongClickListener ;
     }
 
 }

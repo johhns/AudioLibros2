@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Aplicacion extends Application {
 
-    private List<Libro> listalibros ;
+    public List<Libro> listaLibros ;
 
     private AdaptadorLibros adaptador ;
 
@@ -16,8 +16,8 @@ public class Aplicacion extends Application {
     public void onCreate() {
         super.onCreate();
 
-        listalibros = Libro.ejemploLibros() ;
-        adaptador   = new AdaptadorLibros( this , listalibros ) ;
+        listaLibros = Libro.ejemploLibros() ;
+        adaptador   = new AdaptadorLibros( this , listaLibros ) ;
     }
 
     public AdaptadorLibros getAdaptador() {
@@ -25,7 +25,7 @@ public class Aplicacion extends Application {
     };
 
     public List<Libro> getListalibros(){
-        return listalibros ;
+        return listaLibros ;
     }
 
 }

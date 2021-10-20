@@ -3,6 +3,8 @@ package com.developer.johhns.audiolibros2.Fragmentos;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +12,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.developer.johhns.audiolibros2.AdaptadorLibros;
 import com.developer.johhns.audiolibros2.Aplicacion;
+import com.developer.johhns.audiolibros2.Libro;
 import com.developer.johhns.audiolibros2.MainActivity;
 import com.developer.johhns.audiolibros2.R;
 import com.google.android.material.snackbar.Snackbar;
@@ -50,6 +54,39 @@ public class SelectorFragmentos extends Fragment {
                 ( (MainActivity) actividad ).mostrarDetalle(recyclerView.getChildAdapterPosition(v)) ;
             }
         });
+
+        adaptadorLibros.setOnItemLongClickListener( new View.OnLongClickListener() {
+            public boolean onLongClick( final View v ) {
+                final int id recyclerView.getChildAdapterPosition(v);
+                CharSequence[] opciones = { "Compartir" , "Borrar" , "Insertar" } ;
+                AlertDialog.Builder menu = new AlertDialog.Builder( actividad ) ;
+                menu.setItems(opciones, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int opcion) {
+                        switch (opcion) {
+                            case 0 : // compartir
+                                Libro libro =  ((Aplicacion) actividad.getApplication()).listaLibros.get(id);
+                                Intent intent = new Intent( Intent.ACTION_SEND );
+                                intent.setType( "text/plain" );
+                                intent.putExtra( Intent.EXTRA_SUBJECT , libro.titulo ) ;
+                                intent.putExtra( Intent.EXTRA_TEXT , libro.urlAudio ) ;
+                                startActivity( Intent.createChooser( intent , "Compartir" ) );
+                                break;
+                            case 1:
+                                break;
+                            case 2:
+                                break;
+
+                        }
+                    }
+                }) ;
+                menu.create().show();
+                return true ;
+            }
+
+
+        } );
+
         return vista;
     }
 
