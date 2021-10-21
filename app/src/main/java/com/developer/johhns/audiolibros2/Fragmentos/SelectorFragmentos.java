@@ -79,6 +79,7 @@ public class SelectorFragmentos extends Fragment {
                             case 2:
                                 Libro libro2 =  ((Aplicacion) actividad.getApplication()).listaLibros.get(id);
                                 ((Aplicacion) actividad.getApplication()).listaLibros.add( libro2 ) ;
+                                adaptadorLibros.notifyDataSetChanged();
                                 break;
 
                         }
