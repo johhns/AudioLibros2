@@ -34,12 +34,8 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
     public static String ARG_ID_LIBRO = "id_libro";
     MediaPlayer mediaPlayer ;
     MediaController mediaController ;
-    private Activity actividad;
 
-    @Override
-    public void onAttach(@NonNull Activity activity) {
-        super.onAttach(activity);
-        this.actividad   = activity ;
+    public DetalleFragment() {
     }
 
     @Nullable
@@ -65,30 +61,12 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
         if ( mediaPlayer != null ) {
             mediaPlayer.release();
         }
-
-        Log.i("DETALLE","URL = **" + libro.urlAudio + "**") ;
-        AudioAttributes attr = new AudioAttributes.Builder()
-                .setLegacyStreamType(AudioManager.STREAM_MUSIC)
-                .build();
-
-
         mediaPlayer = new MediaPlayer();
-        //Uri
-        String audio = libro.urlAudio  ;
-
-        mediaPlayer.setAudioAttributes( attr );
         mediaPlayer.setOnPreparedListener(this);
         mediaController = new MediaController(getActivity());
+        Uri audio = Uri.parse(libro.getUrlAudio());
         try {
-            //mediaPlayer.setDataSource( actividad.getBaseContext() , audio );
-            mediaPlayer.setDataSource(audio);
-            mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-                @Override
-                public boolean onError(MediaPlayer mp, int what, int extra) {
-                    Log.e("Audiolibros","ERROR : " + String.valueOf(what) + "-" + String.valueOf(extra) ) ;
-                    return false;
-                }
-            });
+            mediaPlayer.setDataSource( getActivity() , audio);
             mediaPlayer.prepareAsync();
         } catch ( IllegalArgumentException e ){
            e.printStackTrace();
@@ -111,7 +89,11 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
         mediaController.setMediaPlayer(this);
         mediaController.setAnchorView( getView().findViewById( R.id.detalle ) );
         mediaController.setEnabled(true);
-        mediaController.show();
+        try {
+            mediaController.show();
+        } catch (Exception e){
+            Log.e("AudioLibros","ERROR al visionar MediaController", e);
+        }
     }
 
     @Override
@@ -162,10 +144,14 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
 
     @Override
     public void onDestroy() {
+        try {
+            mediaController.hide();
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        } catch (Exception e) {
+            Log.d("Audiolibros", "Error en mediaPlayer.stop()");
+        }
         super.onDestroy();
-        mediaPlayer.release();
-        mediaPlayer = null ;
-        Log.i("Audiolibros","MEDIAPLAYER DESTROY " ) ;
     }
 
     @Override

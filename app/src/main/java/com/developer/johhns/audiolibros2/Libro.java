@@ -9,6 +9,7 @@ public class Libro {
         public  String  autor    ;
         public  int     recursoImagen ;
         public  String  urlAudio ;
+        private String urlImagen;
         public  String  genero   ;
         public  Boolean novedad  ;
         public  Boolean leido    ;
@@ -45,6 +46,60 @@ public class Libro {
             return libros ;
         }
 
+    public String getTitulo() {
+        return titulo;
+    }
 
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public String getUrlImagen() {
+        return urlImagen;
+    }
+
+    public void setUrlImagen(String urlImagen) {
+        this.urlImagen = urlImagen;
+    }
+
+    public String getUrlAudio() {
+        return urlAudio;
+    }
+
+    public void setUrlAudio(String urlAudio) {
+        this.urlAudio = urlAudio;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public Boolean getNovedad() {
+        return novedad;
+    }
+
+    public void setNovedad(Boolean novedad) {
+        this.novedad = novedad;
+    }
+
+    public Boolean getLeido() {
+        return leido;
+    }
+
+    public void setLeido(Boolean leido) {
+        this.leido = leido;
+    }
 
 }
