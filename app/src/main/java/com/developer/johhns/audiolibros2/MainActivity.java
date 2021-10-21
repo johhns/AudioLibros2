@@ -1,5 +1,6 @@
 package com.developer.johhns.audiolibros2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -11,6 +12,8 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -60,45 +63,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    /*
-    private void playMusic(){
-        final Thread audioThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final MediaPlayer mediaPlayer = new MediaPlayer();
-
-                Uri myUri = Uri.parse("http://www.hubharp.com/web_sound/BachGavotte.mp3");
-                try {
-                    mediaPlayer.setDataSource(getBaseContext(), myUri);
-                    mediaPlayer.prepare();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        btnPlayMusic.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (mediaPlayer.isPlaying()) {
-                                    mediaPlayer.pause();
-                                } else {
-                                    if (mediaPlayer.getCurrentPosition() > 0)
-                                        mediaPlayer.seekTo(0);
-                                    mediaPlayer.start();
-                                }
-                            }
-                        });
-                    }
-                });
-            }
-        });
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main,menu);
+        return super.onCreateOptionsMenu(menu);
     }
-    */
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        return super.onOptionsItemSelected(item);
+    }
 }
 
 
