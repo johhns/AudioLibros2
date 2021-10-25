@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -45,6 +48,9 @@ public class SelectorFragmentos extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_selector, container, false);
         this.actividad  = getActivity();
+
+        setHasOptionsMenu(true);
+
         recyclerView = vista.findViewById(R.id.recView01);
         recyclerView.setLayoutManager(new GridLayoutManager(this.contexto, 2));
         recyclerView.setAdapter(adaptadorLibros);
@@ -96,4 +102,22 @@ public class SelectorFragmentos extends Fragment {
     }
 
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_selector,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId() ;
+        switch ( id ){
+            case R.id.menu_ultimo:
+                ( (MainActivity) actividad).ultimoVisitado();
+                return true ;
+            case R.id.menu_buscar:
+                return true ;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
