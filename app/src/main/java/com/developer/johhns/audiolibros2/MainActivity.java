@@ -1,6 +1,7 @@
 package com.developer.johhns.audiolibros2;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,8 +59,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if ( menu != null ) {
             setSupportActionBar(menu);
         }
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         adaptador = ((Aplicacion) getApplicationContext()).getAdaptador();
+
+        View detalleFragment = findViewById(R.id.detalle_fragment);
+        dosFragments = detalleFragment != null && detalleFragment.getVisibility() == View.VISIBLE;
+        ponFragmentIzquierdo(new SelectorFragmentos());
 
         tabs = findViewById( R.id.tabs ) ;
         tabs.addTab( tabs.newTab().setText("Todos") );
@@ -117,9 +128,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        View detalleFragment = findViewById(R.id.detalle_fragment);
-        dosFragments = detalleFragment != null && detalleFragment.getVisibility() == View.VISIBLE;
-        ponFragmentIzquierdo(new SelectorFragmentos());
 
 /*
         getSupportFragmentManager().beginTransaction()
