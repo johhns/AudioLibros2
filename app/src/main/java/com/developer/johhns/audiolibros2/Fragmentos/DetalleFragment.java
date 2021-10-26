@@ -197,4 +197,7 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
         Log.e("Audiolibros","ON ERROR : " + what ) ;
         return false;
     }
+
+
+
 }
