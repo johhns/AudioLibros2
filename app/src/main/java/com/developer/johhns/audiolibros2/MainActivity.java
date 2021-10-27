@@ -53,19 +53,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Toolbar menu = findViewById( R.id.barra_ppl ) ;
-
-        if ( menu != null ) {
-            setSupportActionBar(menu);
-        }
-
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         adaptador = ((Aplicacion) getApplicationContext()).getAdaptador();
 
         View detalleFragment = findViewById(R.id.detalle_fragment);
@@ -82,9 +69,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onTabSelected(TabLayout.Tab tab) {
                 switch ( tab.getPosition() ) {
                     case 0: //todos
-                      adaptador.setNovedad(false);
-                      adaptador.setLeido(false);
-                      break;
+                        adaptador.setNovedad(false);
+                        adaptador.setLeido(false);
+                        break;
                     case 1 : // nuevos
                         adaptador.setNovedad(true);
                         adaptador.setLeido(false);
@@ -96,13 +83,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 adaptador.notifyDataSetChanged();
             }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
+            @Override public void onTabUnselected(TabLayout.Tab tab) {  }
+            @Override  public void onTabReselected(TabLayout.Tab tab) { }
         });
+
+        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        Toolbar menu = findViewById( R.id.barra_ppl ) ;
+        setSupportActionBar(menu);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
         toggle = new ActionBarDrawerToggle(this,
@@ -114,8 +106,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(
-                R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById( R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         //drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED,navigationView);
 // Botón flotante
@@ -193,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main,menu);
+        this.menu = menu ;
         return super.onCreateOptionsMenu(menu);
     }
 

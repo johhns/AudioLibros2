@@ -52,17 +52,17 @@ public class SelectorFragmentos extends Fragment {
         adaptadorLibros = app.getAdaptador();
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View vista = inflater.inflate(R.layout.fragment_selector, container, false);
-        //this.actividad  = getActivity();
+    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         setHasOptionsMenu(true);
+        View vista = inflater.inflate(R.layout.fragment_selector, container, false);
 
         recyclerView = vista.findViewById(R.id.recView01);
         recyclerView.setLayoutManager(new GridLayoutManager(this.contexto, 2));
         recyclerView.setAdapter(adaptadorLibros);
+
         adaptadorLibros.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

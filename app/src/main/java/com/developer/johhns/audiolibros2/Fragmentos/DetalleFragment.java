@@ -38,9 +38,8 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
     public DetalleFragment() {
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View   vista = inflater.inflate(R.layout.fragmento_detalle , container , false ) ;
         Bundle args  = getArguments() ;
         if ( args != null ) {
