@@ -53,13 +53,7 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
     }
 
     private void obtenerInformacionLibro(int posicion, View vista) {
-
-        Log.i( "OBTENER INF LIBRO","ID = " + posicion + " //////////////////////////////////" );
-
         int cantidad =  ((Aplicacion) getActivity().getApplication()).getListalibros().size() ;
-
-        Log.i( "OBTENER INF LIBRO","ID = " + posicion + ", Elementos = " + cantidad );
-
         Libro libro = ( (Aplicacion) getActivity().getApplication() ).getListalibros().get(posicion) ;
         ( (TextView) vista.findViewById( R.id.titulo ) ).setText( libro.titulo ) ;
         ( (TextView) vista.findViewById( R.id.autor ) ).setText( libro.autor );
@@ -87,7 +81,6 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
     }
 
     public void obtenerInformacionLibro(int posicion ) {
-        Log.i("DETALLE-FRAGMENT","INICIO ----------------------------------------------");
         obtenerInformacionLibro( posicion , getView() ) ;
     }
 
@@ -107,7 +100,7 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
         try {
             mediaController.show();
         } catch (Exception e){
-            Log.e("AudioLibros","ERROR al visionar MediaController", e);
+            Log.e("AudioLibros","ERROR al mostrar MediaController", e);
         }
     }
 

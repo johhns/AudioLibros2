@@ -145,13 +145,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     public void mostrarDetalle(int id) {
-        Log.i( "MAINACTIVITY", "INICIO " +  id);
         detalleFragment = (DetalleFragment)  getSupportFragmentManager().findFragmentById(R.id.detalle_fragment);
-
-        Log.i( "MAINACTIVITY", "ID = " + id + "  *******************************************************************");
-
-        if (dosFragments) {
-            detalleFragment.obtenerInformacionLibro(id);
+        if ( dosFragments ) {
+            if ( detalleFragment != null ) {
+                detalleFragment.obtenerInformacionLibro(id);
+            } else {
+                Log.i("MAIN-ACTIVITY", "NO SE PUDO OBTENER REFERENCIA AL OBJETO DETALLE-FRAGMENT");
+            }
         } else {
             mostrarBarraAmpliada(false); //////////////////
             detalleFragment = new DetalleFragment();

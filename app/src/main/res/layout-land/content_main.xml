@@ -18,8 +18,9 @@
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/detalle_fragment"
+        android:name="com.developer.johhns.audiolibros2.Fragmentos.DetalleFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2" />
