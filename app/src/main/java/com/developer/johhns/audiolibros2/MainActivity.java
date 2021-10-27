@@ -19,6 +19,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -144,8 +145,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     public void mostrarDetalle(int id) {
-        detalleFragment = (DetalleFragment)
-                getSupportFragmentManager().findFragmentById(R.id.detalle_fragment);
+        Log.i( "MAINACTIVITY", "INICIO " +  id);
+        detalleFragment = (DetalleFragment)  getSupportFragmentManager().findFragmentById(R.id.detalle_fragment);
+
+        Log.i( "MAINACTIVITY", "ID = " + id + "  *******************************************************************");
+
         if (dosFragments) {
             detalleFragment.obtenerInformacionLibro(id);
         } else {
@@ -157,8 +161,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.contenedor_pequeno, detalleFragment)
                     .addToBackStack(null).commit();
-            SharedPreferences pref = getSharedPreferences(
-                    "com.example.audiolibros_internal", MODE_PRIVATE);
+            SharedPreferences pref = getSharedPreferences( "com.example.audiolibros_internal", MODE_PRIVATE);
             SharedPreferences.Editor editor = pref.edit();
             editor.putInt("ultimo", id);
             editor.commit();

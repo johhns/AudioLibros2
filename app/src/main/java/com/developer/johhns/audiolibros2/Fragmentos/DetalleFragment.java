@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import com.developer.johhns.audiolibros2.Aplicacion;
 import com.developer.johhns.audiolibros2.Libro;
 import com.developer.johhns.audiolibros2.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.net.URI;
@@ -52,6 +53,13 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
     }
 
     private void obtenerInformacionLibro(int posicion, View vista) {
+
+        Log.i( "OBTENER INF LIBRO","ID = " + posicion + " //////////////////////////////////" );
+
+        int cantidad =  ((Aplicacion) getActivity().getApplication()).getListalibros().size() ;
+
+        Log.i( "OBTENER INF LIBRO","ID = " + posicion + ", Elementos = " + cantidad );
+
         Libro libro = ( (Aplicacion) getActivity().getApplication() ).getListalibros().get(posicion) ;
         ( (TextView) vista.findViewById( R.id.titulo ) ).setText( libro.titulo ) ;
         ( (TextView) vista.findViewById( R.id.autor ) ).setText( libro.autor );
@@ -79,6 +87,7 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
     }
 
     public void obtenerInformacionLibro(int posicion ) {
+        Log.i("DETALLE-FRAGMENT","INICIO ----------------------------------------------");
         obtenerInformacionLibro( posicion , getView() ) ;
     }
 
@@ -86,7 +95,14 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
     public void onPrepared(MediaPlayer mp) {
         mp.start();
         mediaController.setMediaPlayer(this);
-        mediaController.setAnchorView( getView().findViewById( R.id.detalle ) );
+        //mediaController.setAnchorView( getView().findViewById( R.id.fragment_detalle ) );
+        View v = getView().findViewById(R.id.fragment_detalle);
+        if (v != null) {
+            mediaController.setAnchorView(v);
+        } else {
+            mediaController.setAnchorView(getView().findViewById(R.id.detalle_fragment));
+        }
+
         mediaController.setEnabled(true);
         try {
             mediaController.show();

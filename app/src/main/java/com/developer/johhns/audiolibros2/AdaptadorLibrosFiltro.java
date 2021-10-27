@@ -40,19 +40,23 @@ public class AdaptadorLibrosFiltro extends AdaptadorLibros  {
         recalculaFiltro();
     }
 
+
     public void recalculaFiltro() {
         listaLibros = new ArrayList<Libro>();
         indiceFiltro = new ArrayList<Integer>();
         for (int i = 0; i < listaSinFiltro.size(); i++) {
             Libro libro = listaSinFiltro.get(i);
-            if ( (libro.titulo.toLowerCase().contains(busqueda) ||
-                      libro.autor.toLowerCase().contains(busqueda)) && (libro.genero.startsWith(genero)) && (!novedad || (novedad && libro.novedad)) && (!leido ||
-                    (leido && libro.leido))) {
+            if ((libro.getTitulo().toLowerCase().contains(busqueda) ||
+                    libro.getAutor().toLowerCase().contains(busqueda))
+                    && (libro.getGenero().startsWith(genero))
+                    && (!novedad || (novedad && libro.getNovedad()))
+                    && (!leido || (leido && libro.getLeido()))) {
                 listaLibros.add(libro);
                 indiceFiltro.add(i);
             }
         }
     }
+
 
     public Libro getItem(int posicion) {
         return listaSinFiltro.get(indiceFiltro.get(posicion));
@@ -60,6 +64,12 @@ public class AdaptadorLibrosFiltro extends AdaptadorLibros  {
 
     public long getItemId(int posicion) {
         return indiceFiltro.get(posicion);
+    }
+
+    public void setData(List<Libro> newData){ //**
+        listaSinFiltro = newData;
+        recalculaFiltro();
+        notifyDataSetChanged();
     }
 
     public void borrar(int posicion) {
