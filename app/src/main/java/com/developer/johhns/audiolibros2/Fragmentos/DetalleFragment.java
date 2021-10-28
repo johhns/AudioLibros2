@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+
 import com.android.volley.toolbox.NetworkImageView;
 import com.developer.johhns.audiolibros2.Aplicacion;
 import com.developer.johhns.audiolibros2.Libro;
@@ -62,7 +63,9 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
 
         // ( (ImageView) vista.findViewById( R.id.portada ) ).setImageResource( libro.recursoImagen );
         Aplicacion aplicacion = (Aplicacion) getActivity().getApplication() ;
-        ( (NetworkImageView) vista.findViewById(R.id.portada) ).setImageUrl( libro.getUrlImagen() ,  aplicacion.getLectorImagenes() );
+        Log.i("DETALLE-FRAGMENT","URL A CARGAR = --" + libro.getUrlImagen()  + "---");
+        ((NetworkImageView) vista.findViewById(R.id.portada)).setImageUrl( libro.getUrlImagen() , aplicacion.getLectorImagenes() );
+
 
         vista.setOnTouchListener( this );
         if ( mediaPlayer != null ) {

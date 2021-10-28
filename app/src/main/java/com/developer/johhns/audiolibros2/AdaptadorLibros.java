@@ -2,6 +2,7 @@ package com.developer.johhns.audiolibros2;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +21,11 @@ import java.util.List;
 public class AdaptadorLibros extends RecyclerView.Adapter<AdaptadorLibros.ViewHolder> {
 
 
-    private LayoutInflater inflater ;
-    protected List<Libro> listaLibros ;
-    private Context contexto ;
-    private View.OnClickListener onClickListener ;
-    private View.OnLongClickListener onLongClickListener ;
+    private   LayoutInflater           inflater ;
+    protected List<Libro>              listaLibros ;
+    private   Context                  contexto ;
+    private   View.OnClickListener     onClickListener ;
+    private   View.OnLongClickListener onLongClickListener ;
 
     public AdaptadorLibros(Context contexto ,List<Libro> listaLibros ) {
         inflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
@@ -32,7 +33,7 @@ public class AdaptadorLibros extends RecyclerView.Adapter<AdaptadorLibros.ViewHo
         this.contexto = contexto;
     }
 
-    @NonNull
+
     @Override
     public AdaptadorLibros.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View  vista = inflater.inflate(R.layout.elemento_selector,null) ;
@@ -46,7 +47,10 @@ public class AdaptadorLibros extends RecyclerView.Adapter<AdaptadorLibros.ViewHo
         Libro libro = listaLibros.get(position) ;
         //holder.portada.setImageResource( libro.recursoImagen );
         holder.titulo.setText( libro.titulo );
+        holder.itemView.setScaleX(1);
+        holder.itemView.setScaleY(1);
         Aplicacion aplicacion = (Aplicacion) contexto.getApplicationContext() ;
+        Log.i("ADAPTADOR","URL = -->" + libro.getUrlImagen() + "<---") ;
         aplicacion.getLectorImagenes().get( libro.getUrlImagen() , new ImageLoader.ImageListener(){
             @Override
             public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
@@ -57,14 +61,15 @@ public class AdaptadorLibros extends RecyclerView.Adapter<AdaptadorLibros.ViewHo
                     holder.itemView.setBackgroundColor(palette.getLightMutedColor(0));
                     holder.titulo.setBackgroundColor(palette.getLightVibrantColor(0));
                     holder.portada.invalidate();
+                    Log.i("ADAPTADOR","IMAGEN ACTUALIZADA *****************************");
                 }
             }
 
             @Override
             public void onErrorResponse(VolleyError error) {
                 holder.portada.setImageResource(R.drawable.books);
+                Log.i("ADAPTADOR",error.getMessage());
             }
-
         } );
     }
 
@@ -74,16 +79,12 @@ public class AdaptadorLibros extends RecyclerView.Adapter<AdaptadorLibros.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         public ImageView portada ;
         public TextView titulo  ;
-
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
-
             portada = itemView.findViewById(R.id.portada) ;
             titulo  = itemView.findViewById(R.id.titulo) ;
-
         }
     }
 

@@ -31,18 +31,14 @@ public class Aplicacion extends Application {
         listaLibros    = Libro.ejemploLibros() ;
         ///adaptador   = new AdaptadorLibros( this , listaLibros ) ;
         adaptador      = new AdaptadorLibrosFiltro( this , listaLibros ) ;
-        colaPeticiones = Volley.newRequestQueue(this);
-        lectorImagenes = new ImageLoader(colaPeticiones, new ImageLoader.ImageCache() {
-
+        colaPeticiones = Volley.newRequestQueue(this.getApplicationContext() );
+        lectorImagenes = new ImageLoader( colaPeticiones , new ImageLoader.ImageCache() {
             private final LruCache<String,Bitmap> cache = new LruCache<String,Bitmap>(10);
 
-            @Nullable
-            @Override
             public Bitmap getBitmap(String url) {
                 return cache.get( url ) ;
             }
 
-            @Override
             public void putBitmap(String url, Bitmap bitmap) {
                 cache.put( url , bitmap ) ;
             }

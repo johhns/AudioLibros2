@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private boolean enPreferencias=false;
     private DetalleFragment detalleFragment;
     private AdaptadorLibrosFiltro adaptador;
+
     private AppBarLayout appBarLayout;
     private TabLayout tabs;
     private DrawerLayout drawer;
@@ -98,8 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
-        toggle = new ActionBarDrawerToggle(this,
-                drawer, menu, R.string.drawer_open, R.string.drawer_close);
+        toggle = new ActionBarDrawerToggle(this, drawer, menu, R.string.drawer_open, R.string.drawer_close);
         toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 onBackPressed();
@@ -107,8 +107,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
         NavigationView navigationView = (NavigationView) findViewById( R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
         //drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED,navigationView);
 // Botón flotante
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
