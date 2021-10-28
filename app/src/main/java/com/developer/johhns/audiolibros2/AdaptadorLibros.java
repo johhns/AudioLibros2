@@ -1,6 +1,7 @@
 package com.developer.johhns.audiolibros2;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 
 import java.util.List;
 
@@ -39,8 +44,28 @@ public class AdaptadorLibros extends RecyclerView.Adapter<AdaptadorLibros.ViewHo
     @Override
     public void onBindViewHolder(@NonNull AdaptadorLibros.ViewHolder holder, int position) {
         Libro libro = listaLibros.get(position) ;
-        holder.portada.setImageResource( libro.recursoImagen );
+        //holder.portada.setImageResource( libro.recursoImagen );
         holder.titulo.setText( libro.titulo );
+        Aplicacion aplicacion = (Aplicacion) contexto.getApplicationContext() ;
+        aplicacion.getLectorImagenes().get( libro.getUrlImagen() , new ImageLoader.ImageListener(){
+            @Override
+            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                Bitmap bitmap = response.getBitmap();
+                if (bitmap != null) {
+                    holder.portada.setImageBitmap(bitmap);
+                    Palette palette = Palette.from(bitmap).generate();
+                    holder.itemView.setBackgroundColor(palette.getLightMutedColor(0));
+                    holder.titulo.setBackgroundColor(palette.getLightVibrantColor(0));
+                    holder.portada.invalidate();
+                }
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                holder.portada.setImageResource(R.drawable.books);
+            }
+
+        } );
     }
 
     @Override

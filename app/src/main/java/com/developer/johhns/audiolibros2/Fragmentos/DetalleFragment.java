@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Network;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.developer.johhns.audiolibros2.Aplicacion;
 import com.developer.johhns.audiolibros2.Libro;
 import com.developer.johhns.audiolibros2.R;
@@ -57,7 +59,11 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
         Libro libro = ( (Aplicacion) getActivity().getApplication() ).getListalibros().get(posicion) ;
         ( (TextView) vista.findViewById( R.id.titulo ) ).setText( libro.titulo ) ;
         ( (TextView) vista.findViewById( R.id.autor ) ).setText( libro.autor );
-        ( (ImageView) vista.findViewById( R.id.portada ) ).setImageResource( libro.recursoImagen );
+
+        // ( (ImageView) vista.findViewById( R.id.portada ) ).setImageResource( libro.recursoImagen );
+        Aplicacion aplicacion = (Aplicacion) getActivity().getApplication() ;
+        ( (NetworkImageView) vista.findViewById(R.id.portada) ).setImageUrl( libro.getUrlImagen() ,  aplicacion.getLectorImagenes() );
+
         vista.setOnTouchListener( this );
         if ( mediaPlayer != null ) {
             mediaPlayer.release();
@@ -83,6 +89,8 @@ public class DetalleFragment extends Fragment implements View.OnTouchListener,
     public void obtenerInformacionLibro(int posicion ) {
         obtenerInformacionLibro( posicion , getView() ) ;
     }
+
+
 
     @Override
     public void onPrepared(MediaPlayer mp) {
